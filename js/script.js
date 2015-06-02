@@ -1,27 +1,52 @@
 var accounts = [];
 
 //raw js
-function BankAccount(name, deposit) {
+function BankAccount(name, initialDeposit) {
   "use strict";
-  this.balance = deposit;
+  this.balance = 0;
   this.accountHolder = name;
+  this.ledger = [];
+  this.deposit(initialDeposit);
 };
 
 BankAccount.prototype.deposit = function(amount) {
   this.balance += amount;
+  var row = {transactionType: "Deposit", amount: amount, newBalance: this.balance};
+  this.ledger.push(row);
 };
 
 BankAccount.prototype.withdraw = function(amount) {
   this.balance -= amount;
+  var row = {transactionType: "Withdrawal", amount: amount, newBalance: this.balance};
+  this.ledger.push(row);
 };
 
-var refreshBalance = function(account) {
+var refresh = function(account) {
   $("#balance-display").text("$" + account.balance)
+  displayLedger(account);
   clearInputs();
 };
 
 var clearInputs = function() {
   $("input").val("");
+}
+
+var displayLedger = function(account) {
+  $("table#ledger td").parent().remove();
+  account.ledger.forEach(function(transaction) {
+    var row = "<tr>" +
+                "<td>" + transaction.transactionType + "</td>" +
+                "<td>" + transaction.amount + "</td>" +
+                "<td>" + transaction.newBalance + "</td>" +
+              "</tr>"
+    $("table#ledger").append(row);
+    var lastRow = $("tr").last();
+    if (transaction.transactionType === "Deposit") {
+      lastRow.addClass("success");
+    } else {
+      lastRow.addClass("danger");
+    }
+  });
 }
 
 //jQuery
@@ -46,14 +71,14 @@ $( document ).ready(function() {
       $("select#login-accountHolder").val(accountId);
       var select = $("select#login-accountHolder")
 
-      refreshBalance(newAccount);
+      refresh(newAccount);
       $("#login-panel").show();
     });
 
     $("select#login-accountHolder").change(function () {
       var id = parseInt($("select#login-accountHolder").val());
       var account = accounts[id];
-      refreshBalance(account);
+      refresh(account);
     });
 
     $("form#update-account").submit(function(event) {
@@ -67,6 +92,6 @@ $( document ).ready(function() {
 
       if (depositAmount) { account.deposit(depositAmount); }
       if (withdrawalAmount) { account.withdraw(withdrawalAmount); }
-      refreshBalance(account);
+      refresh(account);
     });
 });
