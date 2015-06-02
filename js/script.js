@@ -22,7 +22,7 @@ BankAccount.prototype.withdraw = function(amount) {
 };
 
 var refresh = function(account) {
-  $("#balance-display").text("$" + account.balance)
+  $("#balance-display").text(formatMoney(account.balance));
   displayLedger(account);
   clearInputs();
 };
@@ -31,13 +31,17 @@ var clearInputs = function() {
   $("input").val("");
 }
 
+var formatMoney = function(amount) {
+  return "$" + parseFloat(amount).toFixed(2);
+}
+
 var displayLedger = function(account) {
   $("table#ledger td").parent().remove();
   account.ledger.forEach(function(transaction) {
     var row = "<tr>" +
                 "<td>" + transaction.transactionType + "</td>" +
-                "<td>" + transaction.amount + "</td>" +
-                "<td>" + transaction.newBalance + "</td>" +
+                "<td>" + formatMoney(transaction.amount) + "</td>" +
+                "<td>" + formatMoney(transaction.newBalance) + "</td>" +
               "</tr>"
     $("table#ledger").append(row);
     var lastRow = $("tr").last();
@@ -61,11 +65,15 @@ $( document ).ready(function() {
       $(".overlay").show();
     });
 
+    $("#cancel").click(function() {
+      $(".overlay").hide();
+    });
+
     $("form#add-account").submit(function(event) {
       event.preventDefault();
 
       var accountHolder = $("input#accountHolder").val();
-      var initialDeposit = parseInt($("input#initialDeposit").val());
+      var initialDeposit = parseFloat($("input#initialDeposit").val());
 
       var newAccount = new BankAccount(accountHolder, initialDeposit);
       var accountId = accounts.push(newAccount) - 1;
@@ -88,8 +96,8 @@ $( document ).ready(function() {
     $("form#update-account").submit(function(event) {
       event.preventDefault();
 
-      var depositAmount = parseInt($("input#new-deposit").val());
-      var withdrawalAmount = parseInt($("input#new-withdrawal").val());
+      var depositAmount = parseFloat($("input#new-deposit").val());
+      var withdrawalAmount = parseFloat($("input#new-withdrawal").val());
 
       var id = parseInt($("select#login-accountHolder").val());
       var account = accounts[id];
