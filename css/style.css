@@ -1,0 +1,13 @@
+#jqtest {
+  background-color: black;
+  color: white;
+}
+
+body {
+  padding:50px;
+}
+
+#balance-display {
+  font-weight: bold;
+  font-size: 4em;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src='js/lib/jquery-1.11.3.js'></script>
+    <script src='js/script.js'></script>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div id="sign-up" class="col-md-3">
+          <form id="add-account" class="well">
+            <div class="form-group">
+              <label for="accountHolder">Name:</label>
+              <input type="text" id="accountHolder">
+            </div>
+            <div class="form-group">
+              <label for="initialDeposit">Initial Deposit:</label>
+              <input type="text" id="initialDeposit" value="5">
+            </div>
+            <button type="submit" class="btn">Create Account</button>
+          </form>
+        </div>
+        <div id="change-account" class="col-md-3 col-md-offset-1">
+          <form id="add-account" class="well">
+            <div class="form-group">
+              <label for="accountHolder">Name:</label>
+              <input type="text" id="accountHolder">
+            </div>
+            <div class="form-group">
+              <label for="initialDeposit">Initial Deposit:</label>
+              <input type="text" id="initialDeposit" value="5">
+            </div>
+            <button type="submit" class="btn">Create Account</button>
+          </form>
+        </div>
+        <div id="balance-panel" class="col-md-3 col-md-offset-1 well">
+          <h3>Your Balance:</h3>
+          <span id="balance-display"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
