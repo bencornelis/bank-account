@@ -15,3 +15,7 @@ body {
 #balance-panel {
   min-height: 210px;
 }
+
+#login-panel {
+  display: none;
+}
