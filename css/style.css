@@ -11,3 +11,7 @@ body {
   font-weight: bold;
   font-size: 4em;
 }
+
+#balance-panel {
+  min-height: 210px;
+}

@@ -37,4 +37,15 @@ $( document ).ready(function() {
 
       refreshBalance(newAccount);
     });
+
+    $("form#update-account").submit(function(event) {
+      event.preventDefault();
+
+      var depositAmount = parseInt($("input#new-deposit").val());
+      var withdrawalAmount = parseInt($("input#new-withdrawal").val());
+      var account = accounts[accounts.length - 1];
+      if (depositAmount) { account.deposit(depositAmount); }
+      if (withdrawalAmount) { account.withdraw(withdrawalAmount); }
+      refreshBalance(account);
+    });
 });
