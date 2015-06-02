@@ -57,6 +57,10 @@ $( document ).ready(function() {
 
     $("#jqtest").text("jQuery Ready");
 
+    $("#btn-add-account").click(function() {
+      $(".overlay").show();
+    });
+
     $("form#add-account").submit(function(event) {
       event.preventDefault();
 
@@ -69,10 +73,10 @@ $( document ).ready(function() {
       var optionHTML = "<option value='" + accountId + "'>" + newAccount.accountHolder + "</option>";
       $("select#login-accountHolder").append(optionHTML);
       $("select#login-accountHolder").val(accountId);
-      var select = $("select#login-accountHolder")
+      $("#login-panel").show();
 
       refresh(newAccount);
-      $("#login-panel").show();
+      $("div#overlay").hide();
     });
 
     $("select#login-accountHolder").change(function () {
