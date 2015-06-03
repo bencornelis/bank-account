@@ -29,7 +29,11 @@ var clearInputs = function() {
 }
 
 var formatMoney = function(amount) {
-  return "$" + parseFloat(amount).toFixed(2);
+  if (amount >= 0) {
+    return "$" + parseFloat(amount).toFixed(2);
+  } else {
+    return "($" + parseFloat(Math.abs(amount)).toFixed(2) + ")";
+  }
 }
 
 var displayLedger = function(account) {
@@ -116,6 +120,6 @@ $(function() {
       } else if (previousBalance < 0) {
         $("#warning").hide();
       }
-      
+
     });
 });
