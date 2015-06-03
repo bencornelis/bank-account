@@ -7,6 +7,10 @@ body {
   padding: 50px;
 }
 
+td, th {
+  padding-left: 40px !important;
+}
+
 #remove-warning {
   font-size:1.5em;
   position:relative;
