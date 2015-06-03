@@ -1,6 +1,3 @@
-var accounts = [];
-
-//raw js
 function BankAccount(name, initialDeposit) {
   "use strict";
   this.balance = 0;
@@ -53,20 +50,23 @@ var displayLedger = function(account) {
   });
 }
 
-//jQuery
-$( document ).ready(function() {
-  "use strict";
+$(function() {
 
-    console.log( "jQuery Ready" );
+    var accounts = [];
 
-    $("#jqtest").text("jQuery Ready");
-
-    $("#btn-add-account").click(function() {
+    $("#add-account").click(function() {
+      $("ul.account-list li").removeClass("active");
+      $(this).parent().addClass("active");
+      $("#account-info").hide();
       $(".overlay").show();
     });
 
     $("#cancel").click(function() {
       $(".overlay").hide();
+    });
+
+    $("#remove-warning").click(function() {
+      $("#warning").hide();
     });
 
     $("form#add-account").submit(function(event) {
@@ -78,20 +78,23 @@ $( document ).ready(function() {
       var newAccount = new BankAccount(accountHolder, initialDeposit);
       var accountId = accounts.push(newAccount) - 1;
 
-      var optionHTML = "<option value='" + accountId + "'>" + newAccount.accountHolder + "</option>";
-      $("select#login-accountHolder").append(optionHTML);
-      $("select#login-accountHolder").val(accountId);
-      $("#login-panel").show();
+      var tabHTML = "<li role='presentation' class='account'>" +
+                      "<a id='" + accountId + "' class='clickable' data-target='#home' data-toggle='tab'>" +
+                      accountHolder + "</a>" +
+                    "</li>";
+      $("ul.account-list").append(tabHTML);
 
-      refresh(newAccount);
+      $("#" + accountId).click(function() {
+        refresh(newAccount);
+        $("ul.account-list li").removeClass("active");
+        $(this).parent().addClass("active");
+        $("#account-info").show();
+      });
+
       $("div#overlay").hide();
+      clearInputs();
     });
 
-    $("select#login-accountHolder").change(function () {
-      var id = parseInt($("select#login-accountHolder").val());
-      var account = accounts[id];
-      refresh(account);
-    });
 
     $("form#update-account").submit(function(event) {
       event.preventDefault();
@@ -99,11 +102,20 @@ $( document ).ready(function() {
       var depositAmount = parseFloat($("input#new-deposit").val());
       var withdrawalAmount = parseFloat($("input#new-withdrawal").val());
 
-      var id = parseInt($("select#login-accountHolder").val());
+      var id = parseInt($("ul.account-list li.active a").attr("id"));
       var account = accounts[id];
+      var previousBalance = account.balance;
 
       if (depositAmount) { account.deposit(depositAmount); }
       if (withdrawalAmount) { account.withdraw(withdrawalAmount); }
+
       refresh(account);
+
+      if (account.balance < 0) {
+        $("#warning").show();
+      } else if (previousBalance < 0) {
+        $("#warning").hide();
+      }
+      
     });
 });

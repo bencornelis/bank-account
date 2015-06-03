@@ -13,65 +13,77 @@
   <body>
 
     <div class="container">
+      <ul class="account-list nav nav-tabs">
+        <li role="presentation" class="active">
+          <a id="add-account" class="clickable" data-target="#home" data-toggle="tab">Add account</a>
+        </li>
+      </ul>
       <div class="row">
-        <div id="sign-up" class="col-md-3 well">
-          <div id="login-panel">
-            <p>Select Account Holder:</p>
-            <select id='login-accountHolder'>
-            </select>
+        <br>
+        <br>
+        <div id="account-info">
+          <div class="col-md-3">
+            <form id="update-account">
+              <h5 class="well">Current Balance: &nbsp; &nbsp; <span id="balance-display"></span></h5>
+              <br>
+              <div class="form-group">
+                <label for="new-deposit">Deposit</label><br>
+                <div class="input-group">
+                  <div class="input-group-addon">$</div>
+                  <input type="number" class="form-control" step="0.01" min="0" id="new-deposit">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="new-withdrawal">Withdraw</label><br>
+                <div class="input-group">
+                  <div class="input-group-addon">$</div>
+                  <input type="number" class="form-control" step="0.01" min="0" id="new-withdrawal">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-warning">Update Account</button>
+            </form>
           </div>
-          <br><br>
-          <div>
-            <span id="btn-add-account" class='btn btn-primary'>Add an Account</span>
-          </div>
-        </div>
-        <div class="col-md-3 col-md-offset-1">
-          <form id="update-account" class="well">
-            <div class="form-group">
-              <label for="new-deposit">Deposit:</label><br>
-              <input type="number" step="0.01" min="0" id="new-deposit">
-            </div>
-            <div class="form-group">
-              <label for="new-withdrawal">Withdraw:</label><br>
-              <input type="number" step="0.01" min="0" id="new-withdrawal">
-            </div>
-            <button type="submit" class="btn btn-warning">Update Account</button>
-          </form>
-        </div>
-        <div id="balance-panel" class="col-md-3 col-md-offset-1 well">
-          <h3>Your Balance:</h3>
-          <span id="balance-display"></span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2 well">
-          <h3 class="text-center">Ledger</h3>
-          <table id="ledger" class="table">
-            <tr>
-              <th>Transaction</th>
-              <th>Amount</th>
-              <th>Balance</th>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
 
-    <div id='overlay' class='overlay'>
-      <div id='modal-new-account'>
-        <form id="add-account" class="well">
-          <div class="form-group">
-            <label for="accountHolder">Name:</label>
-            <input required type="text" id="accountHolder">
+          <div class="col-md-7 col-md-offset-1">
+            <h3 class="text-center">Account Ledger</h3>
+            <br>
+            <table id="ledger" class="table">
+              <tr>
+                <th>Transaction</th>
+                <th>Amount</th>
+                <th>Balance</th>
+              </tr>
+            </table>
+            <br>
+
+            <div id="warning" class="alert alert-danger" role="alert">
+              <strong>Warning!</strong>  You have overdrawn your account.
+              <span id="remove-warning" class="pull-right">&times;</span>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="initialDeposit">Initial Deposit:</label>
-            <input type="number" id="initialDeposit" step="0.01" min="0" required >
+        </div>
+      </div>
+
+      <div id='overlay' class='overlay'>
+        <div id='modal-new-account'>
+          <form id="add-account" class="well">
+            <div class="form-group">
+              <label for="accountHolder">Account Holder</label>
+              <input required type="text" class="form-control" id="accountHolder">
+            </div>
+            <div class="form-group">
+              <label for="initialDeposit">Initial Deposit</label>
+              <div class="input-group">
+                <div class="input-group-addon">$</div>
+                <input type="number" class="form-control"  id="initialDeposit" step="0.01" min="0" required >
+                <div class="input-group-addon">.00</div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </form>
+          <div class="cancel-button">
+            <span id="cancel" class="glyphicon glyphicon-remove text-danger"></span>
           </div>
-          <button type="submit" class="btn btn-primary">Create Account</button>
-        </form>
-        <div class="cancel-button">
-          <span id="cancel" class="glyphicon glyphicon-remove text-danger btn"></span>
         </div>
       </div>
     </div>
